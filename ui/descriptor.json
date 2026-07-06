@@ -1,0 +1,17 @@
+{
+  "plugin_id": "sungrow-solar",
+  "title": "Solaire",
+  "tile": { "icon": "sun", "primary": "pv_power" },
+  "page": { "chart": "flow" },
+  "read_only": true,
+  "metrics": [
+    { "name": "pv_power", "label": "Production PV", "unit": "kW", "tone": "solar" },
+    { "name": "load_power", "label": "Consommation maison", "unit": "kW", "tone": "load" },
+    { "name": "grid_export_power", "label": "Injection réseau", "unit": "kW", "tone": "battery" },
+    { "name": "grid_import_power", "label": "Soutirage réseau", "unit": "kW", "tone": "grid" },
+    { "name": "battery_soc", "label": "État de charge", "unit": "%", "tone": "battery" },
+    { "name": "battery_soh", "label": "Santé batterie", "unit": "%" },
+    { "name": "battery_temp", "label": "Température batterie", "unit": "°C" },
+    { "name": "pv_energy_today", "label": "Production du jour", "unit": "kWh", "tone": "solar" }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "id": "sungrow-solar",
+  "name": "Solaire Sungrow",
+  "manifest_version": 1,
+  "framework_version": "^1.0",
+  "capabilities": ["metrics", "device-poll", "ui-tile", "ui-page"],
+  "perimeters": ["lan-cm5", "hub-cloudsync"],
+  "surfaces": {
+    "collector": { "runtime": "python", "runs_on": "cm5", "heartbeat_seconds": 30 },
+    "backend": { "adapter": "sungrow-solar" },
+    "ui": { "tile": true, "page": true }
+  },
+  "visibility": ["user", "admin_local", "admin_global", "lan_user", "lan_admin"],
+  "secrets": [
+    { "key": "winet_user", "sops_ref": "sops://essensys/plugins/sungrow-solar#winet_user" },
+    { "key": "winet_pass", "sops_ref": "sops://essensys/plugins/sungrow-solar#winet_pass" }
+  ],
+  "metrics": [
+    { "name": "pv_power", "label": "Production PV", "unit": "kW", "kind": "gauge" },
+    { "name": "load_power", "label": "Consommation maison", "unit": "kW", "kind": "gauge" },
+    { "name": "grid_export_power", "label": "Injection réseau", "unit": "kW", "kind": "gauge" },
+    { "name": "grid_import_power", "label": "Soutirage réseau", "unit": "kW", "kind": "gauge" },
+    { "name": "battery_soc", "label": "État de charge batterie", "unit": "%", "kind": "gauge" },
+    { "name": "battery_soh", "label": "Santé batterie", "unit": "%", "kind": "gauge" },
+    { "name": "battery_temp", "label": "Température batterie", "unit": "°C", "kind": "gauge" },
+    { "name": "pv_energy_today", "label": "Production du jour", "unit": "kWh", "kind": "counter" }
+  ],
+  "write_scope": "read-only"
+}

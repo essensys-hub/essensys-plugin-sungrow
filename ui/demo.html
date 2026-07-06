@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sungrow · démo tuile</title>
+  <style>
+    :root {
+      --essensys-primary:#2563eb; --essensys-success:#16a34a; --essensys-warning:#f59e0b;
+      --essensys-bg-card:#fff; --essensys-border:#e2e8f0; --essensys-text-main:#111827; --essensys-text-muted:#6b7280;
+      --font: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    }
+    @media (prefers-color-scheme: dark){ :root{
+      --essensys-bg-card:#1e293b; --essensys-border:#475569; --essensys-text-main:#f1f5f9; --essensys-text-muted:#94a3b8;
+    }}
+    body{ font-family:var(--font); background:var(--essensys-bg-card); margin:0; padding:24px; display:grid; place-items:center; }
+    /* styles renderer (miroir de @essensys/plugin-renderer plugin.css) */
+    .ess-plugin{ font-family:var(--font); color:var(--essensys-text-main); background:var(--essensys-bg-card);
+      border:1px solid var(--essensys-border); border-radius:14px; padding:14px 15px; width:230px;
+      box-shadow:0 1px 2px rgba(16,24,40,.05);}
+    .ess-plugin header{ display:flex; align-items:center; gap:8px; }
+    .ess-plugin__title{ font-size:13px; font-weight:650; }
+    .ess-plugin__primary{ font-size:26px; font-weight:750; letter-spacing:-.02em; font-variant-numeric:tabular-nums; margin-top:8px; }
+    .ess-plugin__stale{ font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.05em;
+      color:var(--essensys-warning); background:color-mix(in srgb,var(--essensys-warning) 15%,transparent); padding:2px 6px; border-radius:5px;}
+  </style>
+</head>
+<body>
+  <!-- Fixture statique pour le harnais Playwright (UX Matrix). En prod, ce
+       markup est produit par <PluginTile> depuis le descripteur server-driven. -->
+  <div class="ess-plugin ess-plugin--tile" data-plugin="sungrow-solar">
+    <header>
+      <span class="ess-plugin__title">Solaire</span>
+      <span class="ess-plugin__stale" id="stale" hidden>obsolète</span>
+    </header>
+    <div class="ess-plugin__primary" style="color:var(--essensys-warning)">5.81 kW</div>
+  </div>
+  <script>
+    if (new URLSearchParams(location.search).has("stale")) {
+      document.getElementById("stale").hidden = false;
+    }
+  </script>
+</body>
+</html>

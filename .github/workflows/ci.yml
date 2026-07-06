@@ -1,0 +1,51 @@
+name: ci
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  adapter:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: essensys-plugin-sungrow
+      # Le SDK est référencé en local via replace (../essensys-plugin-framework/go).
+      - uses: actions/checkout@v4
+        with:
+          repository: essensys-hub/essensys-plugin-framework
+          path: essensys-plugin-framework
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.24"
+      - name: go test adapter
+        working-directory: essensys-plugin-sungrow/adapter
+        run: go test ./...
+
+  collector:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Smoke dry-run (hors-ligne)
+        run: python3 collector/sungrow_collector.py --once --dry-run
+
+  manifest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: essensys-plugin-sungrow
+      - uses: actions/checkout@v4
+        with:
+          repository: essensys-hub/essensys-plugin-framework
+          path: essensys-plugin-framework
+      - name: Valider le manifest + lint secrets
+        run: |
+          python3 essensys-plugin-framework/scripts/validate_manifest.py essensys-plugin-sungrow/plugin.manifest.json
+          python3 essensys-plugin-framework/scripts/lint_secrets.py essensys-plugin-sungrow/plugin.manifest.json
+      - name: Diff-guard legacy
+        run: bash essensys-plugin-framework/scripts/diff_guard_legacy.sh essensys-plugin-sungrow
