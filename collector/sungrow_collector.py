@@ -157,7 +157,14 @@ class Publisher:
         self.client = None
         if not dry:
             import paho.mqtt.client as mqtt  # dépendance réelle en prod
-            self.client = mqtt.Client()
+            try:
+                # paho-mqtt >= 2.0 : la version d'API de callback est obligatoire.
+                self.client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION1)
+            except (AttributeError, TypeError):
+                self.client = mqtt.Client()  # paho-mqtt 1.x
+            user = os.environ.get("MQTT_USER")
+            if user:
+                self.client.username_pw_set(user, os.environ.get("MQTT_PASS", ""))
             self.client.connect(host, port, 60)
             self.client.loop_start()
 
