@@ -52,6 +52,12 @@ func (Adapter) Descriptor() plugin.Descriptor {
 					{Label: "Batterie chargée", Metric: "battery_charge_today", Tone: "battery"},
 				},
 			},
+			Flow: &plugin.FlowSpec{
+				PV: "pv_power", Load: "load_power",
+				GridImport: "grid_import_power", GridExport: "grid_export_power",
+				BatteryCharge: "battery_charge_power", BatteryDischarge: "battery_discharge_power",
+				BatterySoc: "battery_soc",
+			},
 		},
 		Metrics: []plugin.MetricDisplay{
 			{Name: "pv_power", Label: "Production PV", Unit: "kW", Tone: "solar"},
@@ -64,6 +70,8 @@ func (Adapter) Descriptor() plugin.Descriptor {
 			{Name: "pv_energy_today", Label: "Production du jour", Unit: "kWh", Tone: "solar"},
 			{Name: "grid_export_today", Label: "Injecté aujourd'hui", Unit: "kWh"},
 			{Name: "battery_charge_today", Label: "Batterie chargée aujourd'hui", Unit: "kWh", Tone: "battery"},
+			{Name: "battery_charge_power", Label: "Charge batterie", Unit: "kW", Tone: "battery"},
+			{Name: "battery_discharge_power", Label: "Décharge batterie", Unit: "kW", Tone: "battery"},
 		},
 	}
 }
