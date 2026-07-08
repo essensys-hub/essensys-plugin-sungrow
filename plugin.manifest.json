@@ -23,7 +23,9 @@
     { "name": "battery_soc", "label": "État de charge batterie", "unit": "%", "kind": "gauge" },
     { "name": "battery_soh", "label": "Santé batterie", "unit": "%", "kind": "gauge" },
     { "name": "battery_temp", "label": "Température batterie", "unit": "°C", "kind": "gauge" },
-    { "name": "pv_energy_today", "label": "Production du jour", "unit": "kWh", "kind": "counter" }
+    { "name": "pv_energy_today", "label": "Production du jour", "unit": "kWh", "kind": "counter" },
+    { "name": "grid_export_today", "label": "Injecté aujourd'hui", "unit": "kWh", "kind": "counter" },
+    { "name": "battery_charge_today", "label": "Batterie chargée aujourd'hui", "unit": "kWh", "kind": "counter" }
   ],
   "write_scope": "read-only"
 }

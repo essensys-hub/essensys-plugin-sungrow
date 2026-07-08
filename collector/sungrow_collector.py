@@ -39,12 +39,15 @@ METRIC_MAP = {
     "I18N_COMMON_BATTARY_HEALTH": ("battery_soh", "%"),
     "I18N_COMMON_BATTERY_TEMPERATURE": ("battery_temp", "°C"),
     "I18N_COMMON_PV_DAYILY_ENERGY_GENERATION": ("pv_energy_today", "kWh"),
+    "I18N_COMMON_DAILY_FEED_NETWORK_PV": ("grid_export_today", "kWh"),
+    "I18N_COMMON_DAILY_BATTERY_CHARGE": ("battery_charge_today", "kWh"),
 }
 
 SIMULATED = {  # valeurs réelles relevées sur SH6.0RS, pour --dry-run
     "pv_power": 5.81, "load_power": 2.36, "grid_export_power": 3.33,
     "grid_import_power": 0.0, "battery_soc": 100.0, "battery_soh": 99.0,
     "battery_temp": 29.4, "pv_energy_today": 24.8,
+    "grid_export_today": 14.6, "battery_charge_today": 6.4,
 }
 
 

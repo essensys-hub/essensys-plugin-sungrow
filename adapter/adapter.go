@@ -28,6 +28,31 @@ func (Adapter) Descriptor() plugin.Descriptor {
 		Tile:     &plugin.TileSpec{Icon: "sun", Primary: "pv_power"},
 		Page:     &plugin.PageSpec{Chart: "flow"},
 		ReadOnly: true,
+		// Tableau de bord conforme à la maquette sungrow-plugin-ux (vue 2).
+		Dashboard: &plugin.DashboardSpec{
+			Cards: []plugin.CardSpec{
+				{Label: "Production PV", Icon: "sun", Tone: "solar", Metric: "pv_power",
+					Sub: []plugin.SubRef{{Label: "aujourd'hui", Metric: "pv_energy_today"}}},
+				{Label: "Consommation", Icon: "home", Tone: "load", Metric: "load_power",
+					SubText: "foyer"},
+				{Label: "Injection réseau", Icon: "arrow-up", Tone: "battery", ValueTone: "battery", Metric: "grid_export_power",
+					Sub: []plugin.SubRef{{Label: "soutirage", Metric: "grid_import_power"}}},
+				{Label: "Batterie SBR064", Icon: "battery", Tone: "battery", Metric: "battery_soc",
+					Sub: []plugin.SubRef{{Metric: "battery_temp"}, {Label: "santé", Metric: "battery_soh"}}},
+			},
+			Gauge: &plugin.GaugeSpec{
+				Title: "Taux d'autoconsommation", Numerator: "grid_export_today", Denominator: "pv_energy_today",
+				Invert: true, Label: "autoconsommé", LegendA: "Autoconsommé", LegendB: "Injecté", Tone: "battery",
+			},
+			Chart: &plugin.ChartSpec{
+				Title: "Production du jour", Metric: "pv_power", Unit: "kW", Tone: "solar",
+				Stats: []plugin.StatRef{
+					{Label: "Énergie produite", Metric: "pv_energy_today"},
+					{Label: "Pic", Peak: true, Tone: "solar"},
+					{Label: "Batterie chargée", Metric: "battery_charge_today", Tone: "battery"},
+				},
+			},
+		},
 		Metrics: []plugin.MetricDisplay{
 			{Name: "pv_power", Label: "Production PV", Unit: "kW", Tone: "solar"},
 			{Name: "load_power", Label: "Consommation maison", Unit: "kW", Tone: "load"},
@@ -37,6 +62,8 @@ func (Adapter) Descriptor() plugin.Descriptor {
 			{Name: "battery_soh", Label: "Santé batterie", Unit: "%"},
 			{Name: "battery_temp", Label: "Température batterie", Unit: "°C"},
 			{Name: "pv_energy_today", Label: "Production du jour", Unit: "kWh", Tone: "solar"},
+			{Name: "grid_export_today", Label: "Injecté aujourd'hui", Unit: "kWh"},
+			{Name: "battery_charge_today", Label: "Batterie chargée aujourd'hui", Unit: "kWh", Tone: "battery"},
 		},
 	}
 }
