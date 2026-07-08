@@ -13,6 +13,9 @@ import (
 
 const ID = "sungrow-solar"
 
+// Version est la version du plugin affichée dans l'écran Paramètres.
+const Version = "V.1.7.0"
+
 // Adapter implémente plugin.PluginAdapter.
 type Adapter struct{}
 
