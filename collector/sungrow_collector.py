@@ -8,6 +8,7 @@ sur Mosquitto selon le contrat collecteur :
 
 Identifiants WiNet fournis par l'environnement (résolus depuis SOPS par
 l'orchestrateur, jamais en clair ici) : WINET_IP, WINET_USER, WINET_PASS.
+Tous trois sont obligatoires hors --dry-run ; WINET_IP n'a pas de valeur par défaut.
 MQTT : MQTT_HOST, MQTT_PORT.
 
 Modes :
@@ -204,9 +205,13 @@ def main(argv=None):
     ap.add_argument("--machine-id", default=os.environ.get("MACHINE_ID", "A254"))
     a = ap.parse_args(argv)
 
-    ip = os.environ.get("WINET_IP", "192.168.1.247")
+    ip = os.environ.get("WINET_IP", "").strip()
     user = os.environ.get("WINET_USER", "")
     passwd = os.environ.get("WINET_PASS", "")
+    if not a.dry_run and not ip:
+        print("WINET_IP requis : adresse du dongle WiNet-S sur le LAN (aucune valeur par défaut)",
+              file=sys.stderr)
+        return 2
     if not a.dry_run and not (user and passwd):
         print("WINET_USER / WINET_PASS requis (via SOPS)", file=sys.stderr)
         return 2
