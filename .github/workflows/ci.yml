@@ -30,6 +30,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - name: Tests unitaires
+        run: python3 -m unittest discover -s collector -v
       - name: Smoke dry-run (hors-ligne)
         run: python3 collector/sungrow_collector.py --once --dry-run
 

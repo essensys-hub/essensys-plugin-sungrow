@@ -10,7 +10,7 @@ Branches en jeu (non fusionnées) :
 ## 0. Prérequis sur la CM5
 
 - Mosquitto, Redis, Prometheus déjà déployés (stack LAN existante).
-- Onduleur WiNet-S joignable : `192.168.1.247` (même LAN que la CM5).
+- Onduleur WiNet-S joignable depuis la CM5 (même LAN) ; son adresse `<ip-du-dongle>` se relève sur la box ou le contrôleur réseau et ne s'écrit pas dans ce dépôt.
 - Identifiants WiNet résolus depuis **SOPS** (ne jamais les écrire en clair) :
   `WINET_USER`, `WINET_PASS`.
 - Python 3 + `paho-mqtt` pour le collecteur : `pip install -r collector/requirements.txt`.
@@ -40,7 +40,7 @@ npm run build                           # -> dist/
 
 ```bash
 cd ~/ESSENSYS/essensys-plugin-sungrow
-export WINET_IP=192.168.1.247
+export WINET_IP=<ip-du-dongle>        # obligatoire, aucune valeur par défaut
 export WINET_USER=... WINET_PASS=...   # depuis SOPS
 export MQTT_HOST=127.0.0.1 MACHINE_ID=A254
 python3 collector/sungrow_collector.py --interval 10
